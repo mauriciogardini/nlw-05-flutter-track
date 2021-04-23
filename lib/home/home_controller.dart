@@ -31,4 +31,14 @@ class HomeController {
 
     state = HomeState.success;
   }
+
+  void getData() async {
+    state = HomeState.loading;
+    await Future.delayed(Duration(seconds: 2));
+
+    user = await repository.getUser();
+    quizzes = await repository.getQuizzes();
+
+    state = HomeState.success;
+  }
 }
