@@ -2,15 +2,18 @@ import 'package:devquiz/challenge/challenge_controller.dart';
 import 'package:devquiz/challenge/widgets/nextbutton/next_button_widget.dart';
 import 'package:devquiz/challenge/widgets/questionindicator/question_indicator_widget.dart';
 import 'package:devquiz/challenge/widgets/quiz/quiz_widget.dart';
+import 'package:devquiz/result/result_page.dart';
 import 'package:devquiz/shared/models/question_model.dart';
 import 'package:flutter/material.dart';
 
 class ChallengePage extends StatefulWidget {
   final List<QuestionModel> questions;
+  final String title;
 
   ChallengePage({
     Key? key,
     required this.questions,
+    required this.title,
   }) : super(key: key);
 
   @override
@@ -36,6 +39,12 @@ class _ChallengePageState extends State<ChallengePage> {
       ),
       curve: Curves.linear,
     );
+  }
+
+  void onSelect(bool value) {
+    if (value) {
+      challengeController.rightAnswersCount++;
+    }
   }
 
   @override
@@ -70,6 +79,7 @@ class _ChallengePageState extends State<ChallengePage> {
         children: widget.questions
             .map((e) => QuizWidget(
                   question: e,
+                  onSelect: onSelect,
                 ))
             .toList(),
       ),
@@ -105,7 +115,15 @@ class _ChallengePageState extends State<ChallengePage> {
                         child: NextButtonWidget.green(
                           label: 'Finish',
                           onTap: () {
-                            Navigator.pop(context);
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ResultPage(
+                                          title: widget.title,
+                                          length: widget.questions.length,
+                                          rightAnswersCount: challengeController
+                                              .rightAnswersCount,
+                                        )));
                           },
                         ),
                       ),
