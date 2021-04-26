@@ -59,10 +59,11 @@ class _ChartWidgetState extends State<ChartWidget>
               ),
             ),
             Center(
-                child: Text(
-              "${(_animation.value * 100).toInt()}%",
-              style: AppTextStyles.heading,
-            ))
+              child: Text(
+                "${(_animation.value * 100).toInt()}%",
+                style: AppTextStyles.heading,
+              ),
+            )
           ],
         ),
       ),

@@ -2,7 +2,7 @@ import 'package:devquiz/challenge/challenge_page.dart';
 import 'package:devquiz/core/core.dart';
 import 'package:devquiz/home/home_controller.dart';
 import 'package:devquiz/home/home_state.dart';
-import 'package:devquiz/home/widgets/levelbutton/level_button_widget.dart';
+import 'package:devquiz/home/widgets/levelbutton/level_buttons_widget.dart';
 import 'package:devquiz/home/widgets/quizcard/quiz_card_widget.dart';
 import 'package:devquiz/settings/settings_page.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final controller = HomeController();
+  final controller = HomeController.instance;
 
   @override
   void initState() {
@@ -48,22 +48,10 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    LevelButtonWidget(
-                      label: "Easy",
-                    ),
-                    LevelButtonWidget(
-                      label: "Medium",
-                    ),
-                    LevelButtonWidget(
-                      label: "Hard",
-                    ),
-                    LevelButtonWidget(
-                      label: "Expert",
-                    ),
-                  ],
+                Center(
+                  child: Expanded(
+                    child: LevelButtonsWidget(),
+                  ),
                 ),
                 SizedBox(
                   height: 20,

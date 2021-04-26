@@ -11,11 +11,17 @@ class HomeRepository {
     return user;
   }
 
-  Future<List<QuizModel>> getQuizzes() async {
+  Future<List<QuizModel>> getQuizzes(List<String> activeFilters) async {
+    List<Level> activeFiltersLevels =
+        activeFilters.map((e) => e.toString().parse).toList();
     final response =
         await rootBundle.loadString("assets/database/quizzes.json");
     final list = jsonDecode(response) as List;
-    final quizzes = list.map((e) => QuizModel.fromMap(e)).toList();
+    List<QuizModel> quizzes = list.map((e) => QuizModel.fromMap(e)).toList();
+    if (activeFiltersLevels.length > 0) {
+      quizzes =
+          quizzes.where((i) => activeFiltersLevels.contains(i.level)).toList();
+    }
     return quizzes;
   }
 }
