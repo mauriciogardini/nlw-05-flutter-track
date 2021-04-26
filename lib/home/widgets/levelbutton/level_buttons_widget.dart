@@ -74,8 +74,8 @@ class _LevelButtonsWidgetState extends State<LevelButtonsWidget> {
         isSelected: homeController.filterStatuses,
         onPressed: (int index) {
           setState(() {
-            homeController.filterStatuses[index] =
-                !homeController.filterStatuses[index];
+            homeController.updateFilter(
+                index, !homeController.filterStatuses[index]);
           });
         },
         borderRadius: BorderRadius.all(Radius.circular(10)),

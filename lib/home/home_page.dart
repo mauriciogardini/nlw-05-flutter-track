@@ -5,6 +5,7 @@ import 'package:devquiz/home/home_state.dart';
 import 'package:devquiz/home/widgets/levelbutton/level_buttons_widget.dart';
 import 'package:devquiz/home/widgets/quizcard/quiz_card_widget.dart';
 import 'package:devquiz/settings/settings_page.dart';
+import 'package:devquiz/shared/models/quiz_model.dart';
 import 'package:flutter/material.dart';
 
 import 'widgets/appbar/app_bar_widget.dart';
@@ -62,6 +63,14 @@ class _HomePageState extends State<HomePage> {
                     mainAxisSpacing: 16,
                     crossAxisCount: 2,
                     children: controller.quizzes!
+                        .where((element) => controller.filterStatuses
+                            .map((el) {
+                              var index = controller.filterStatuses.indexOf(el);
+                              return el ? controller.filterNames[index] : "";
+                            })
+                            .toList()
+                            .contains(element.level.parse))
+                        .toList()
                         .map(
                           (e) => QuizCardWidget(
                             title: e.title,

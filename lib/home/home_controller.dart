@@ -40,7 +40,7 @@ class HomeController {
     }
   ];
   List<String> filterNames = ["easy", "medium", "hard", "expert"];
-  List<bool> filterStatuses = [false, false, false, false];
+  List<bool> filterStatuses = [true, true, true, true];
 
   final repository = HomeRepository();
 
@@ -57,11 +57,7 @@ class HomeController {
     state = HomeState.loading;
     await Future.delayed(Duration(seconds: 2));
 
-    List<String> activeFilters = filterStatuses
-        .map((e) => e ? filterNames[filterStatuses.indexOf(e)] : '')
-        .toList();
-
-    quizzes = await repository.getQuizzes(activeFilters);
+    quizzes = await repository.getQuizzes();
 
     state = HomeState.success;
   }
@@ -69,13 +65,16 @@ class HomeController {
   void getData() async {
     state = HomeState.loading;
 
-    List<String> activeFilters = [];
-    // List<String> activeFilters = filterStatuses
-    //     .map((e) => e ? filterNames[filterStatuses.indexOf(e)] : '')
-    //     .toList();
-
     user = await repository.getUser();
-    quizzes = await repository.getQuizzes(activeFilters);
+    quizzes = await repository.getQuizzes();
+
+    state = HomeState.success;
+  }
+
+  void updateFilter(index, value) {
+    state = HomeState.loading;
+
+    filterStatuses[index] = value;
 
     state = HomeState.success;
   }
